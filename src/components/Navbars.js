@@ -31,9 +31,9 @@ export default class Navbars extends Component {
               <Link class="dropdown-item" to="/Products">
                 Menu
               </Link>
-              <a class="dropdown-item" href="#">
+              <Link class="dropdown-item" to="/Cart">
                 Cart
-              </a>
+              </Link>
             </div>
           </div>
         </div>
