@@ -21,7 +21,7 @@ export default class Navbars extends Component {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Dropdown link
+              Cafeteria Menu
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -29,10 +29,10 @@ export default class Navbars extends Component {
                 Login
               </Link>
               <a class="dropdown-item" href="#">
-                Another action
+                Menu
               </a>
               <a class="dropdown-item" href="#">
-                Something else here
+                Cart
               </a>
             </div>
           </div>
