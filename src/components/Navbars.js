@@ -28,9 +28,9 @@ export default class Navbars extends Component {
               <Link class="dropdown-item" to="/">
                 Login
               </Link>
-              <a class="dropdown-item" href="#">
+              <Link class="dropdown-item" to="/Products">
                 Menu
-              </a>
+              </Link>
               <a class="dropdown-item" href="#">
                 Cart
               </a>
