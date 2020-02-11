@@ -34,6 +34,9 @@ export default class Navbars extends Component {
               <Link class="dropdown-item" to="/Cart">
                 Cart
               </Link>
+              <Link class="dropdown-item" to="/Profile">
+                Profile
+              </Link>
             </div>
           </div>
         </div>
@@ -41,16 +44,3 @@ export default class Navbars extends Component {
     );
   }
 }
-/* <ul class="navbar">
-          <li>Home</li>
-          <li>
-            <a> Profile</a>
-            <ul>
-              <li>Sign In</li>
-              <li>Register</li>
-              <li>Order History</li>
-              <li>Profile</li>
-            </ul>
-          </li>
-          <li>Cart</li>
-        </ul> */
