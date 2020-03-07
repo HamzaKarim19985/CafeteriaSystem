@@ -19,6 +19,7 @@ function App() {
         <Route path="/Modal" component={Modal}></Route>
         <Route path="/Profile" component={Profile}></Route>
       </Switch>
+      <Modal />
     </React.Fragment>
   );
 }

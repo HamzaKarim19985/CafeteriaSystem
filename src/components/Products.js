@@ -1,21 +1,9 @@
 import React, { Component } from "react";
 import { storeProducts, detailProduct } from "./data.js";
 import Product from "./Product";
-
+import { ProductConsumer, ProductContext } from "../context.js";
 export default class Products extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [],
-      filteredArr: [],
-      query: ""
-    };
-  }
-  testing = obj => {
-    console.log(detailProduct.id);
-  };
   render() {
-    let productList = storeProducts;
     return (
       <div class="container">
         <div>
@@ -29,9 +17,13 @@ export default class Products extends Component {
         </div>
 
         <div class="Grid-container">
-          {productList.map(e => {
-            return <Product key={e.id} product={e} />;
-          })}
+          <ProductConsumer>
+            {value => {
+              return value.products.map(e => {
+                return <Product key={e.id} product={e} />;
+              });
+            }}
+          </ProductConsumer>
         </div>
       </div>
     );
