@@ -682,3 +682,120 @@ body {
   font-weight: 600;
   color: #0062cc;
 }
+
+/*Modal */
+.ModalContainer {
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
+}
+#modal {
+  background: blue;
+  width: fit-content;
+  height: fit-content;
+}
+.ButtonContainer {
+  text-transfrom: capitalize;
+  font-size: 1.4rem;
+  background: transparent;
+  border: 0.05rem solid var(--mainYellow);
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  margin: 0.2rem 0.5rem 0.2rem 0;
+  color: var(--lightBlue);
+  cursor: pointer;
+}
+.ButtonContainer :hover :focus {
+  background: lightseagreen;
+  color: var(--mainYellow);
+  outline: none;
+}
+
+/* Dropdown Option (Modal) */
+
+.horizontal-container {
+  display: inline-block;
+  flex-direction: row;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+select {
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #2c3e50;
+  background-image: none;
+  color: white;
+  width: 33%;
+  text-align: center;
+}
+/* Custom Select */
+.selectdiv {
+  position: relative;
+  /*Don't really need this just for demo styling*/
+  padding: 0em;
+  float: left;
+  text-align: center;
+}
+
+/* IE11 hide native button (thanks Matt!) */
+select::-ms-expand {
+  display: none;
+}
+
+.selectdiv:after {
+  content: "<>";
+  font: 17px "Consolas", monospace;
+  color: #333;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  right: 11px;
+  /*Adjust for position however you want*/
+
+  top: 18px;
+  padding: 0 0 2px;
+  border-bottom: 1px solid #999;
+  /*left line */
+
+  position: absolute;
+  pointer-events: none;
+}
+
+.selectdiv select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Add some styling */
+
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: 50px;
+  float: right;
+  margin: 5px 0px;
+  padding: 0px 24px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #333;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  -ms-word-break: normal;
+  word-break: normal;
+}

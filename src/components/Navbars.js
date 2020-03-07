@@ -37,6 +37,9 @@ export default class Navbars extends Component {
               <Link class="dropdown-item" to="/Profile">
                 Profile
               </Link>
+              <Link class="dropdown-item" to="/Modal">
+                Modal
+              </Link>
             </div>
           </div>
         </div>

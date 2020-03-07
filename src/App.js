@@ -7,6 +7,7 @@ import LandingPage from "./components/LandingPage";
 import Products from "./components/Products";
 import Profile from "./components/Profile";
 import Cart from "./components/cartComponents/Cart";
+import Modal from "./components/Modal";
 function App() {
   return (
     <React.Fragment>
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/" component={LandingPage}></Route>
         <Route path="/Products" component={Products}></Route>
         <Route path="/Cart" component={Cart}></Route>
+        <Route path="/Modal" component={Modal}></Route>
         <Route path="/Profile" component={Profile}></Route>
       </Switch>
     </React.Fragment>
