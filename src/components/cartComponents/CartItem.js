@@ -13,7 +13,13 @@ export default class CartItem extends Component {
       count,
       total
     } = this.props.item;
-    const { decrement, increment, removeItem } = this.props.value;
+    const {
+      decrement,
+      increment,
+      removeItem,
+      openModal,
+      changeItem
+    } = this.props.value;
     return (
       <div class="row my-1 text-center">
         <div class="col-10 mx-auto col-lg-2">
@@ -41,7 +47,16 @@ export default class CartItem extends Component {
 
         <div class="col-10 mx-auto col-lg-2">
           <div class="cart-icon">
-            <i class="fas fa-trash" />
+            <button
+              onClick={() => {
+                changeItem(id);
+              }}
+            >
+              <i class="fas fa-trash" />
+            </button>
+            <button onClick={() => removeItem(id)}>
+              <i class="fas fa-trash" />
+            </button>
           </div>
         </div>
 

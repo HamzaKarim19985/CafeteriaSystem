@@ -13,7 +13,9 @@ class ProductProvider extends Component {
     loggedIn: false,
     cartSubTotal: 0,
     cartTax: 0,
-    cartTotal: 0
+    cartTotal: 0,
+    payrollDeduction: 0,
+    totalPayments: 0
   };
 
   componentDidMount() {
@@ -37,10 +39,37 @@ class ProductProvider extends Component {
       };
     });
   };
+  addPayroll = () => {
+    let payment = this.state.cartTotal;
+    this.setState(
+      () => {
+        return {
+          payrollDeduction: this.state.payrollDeduction + payment,
+          totalPayments: this.state.totalPayments + payment
+        };
+      },
+      () => {
+        this.clearCart();
+      }
+    );
+  };
+  addPayment = () => {
+    let payment = this.state.cartTotal;
+    this.setState(
+      () => {
+        return {
+          totalPayments: this.state.totalPayments + payment
+        };
+      },
+      () => {
+        this.clearCart();
+      }
+    );
+  };
   clearCart = () => {
     this.setState(
       () => {
-        return { cart: [] };
+        return { cart: [], cartTotal: 0, cartSubTotal: 0, cartTax: 0 };
       },
       () => {
         this.setProducts();
@@ -93,7 +122,10 @@ class ProductProvider extends Component {
       () => this.addTotals()
     );
   };
-
+  changeItem = id => {
+    this.removeItem(id);
+    this.openModal(id);
+  };
   openModal = id => {
     const product = this.getItem(id);
     this.setState(() => {
@@ -160,7 +192,6 @@ class ProductProvider extends Component {
     product.sauce = sauce;
     product.total = total;
     const price = product.price;
-    product.total = price;
     this.setState(
       () => {
         return {
@@ -186,7 +217,10 @@ class ProductProvider extends Component {
           increment: this.increment,
           decrement: this.decrement,
           removeItem: this.removeItem,
-          clearCart: this.clearCart
+          clearCart: this.clearCart,
+          changeItem: this.changeItem,
+          addPayroll: this.addPayroll,
+          addPayment: this.addPayment
         }}
       >
         {this.props.children}

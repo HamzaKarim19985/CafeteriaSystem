@@ -4,9 +4,9 @@ import { ProductConsumer, ProductContext } from "../context.js";
 import Select from "react-select";
 
 const options = [
-  { value: "Small", label: "Small" },
-  { value: "Medium", label: "Medium" },
-  { value: "Large", label: "Large" }
+  { value: -3, label: "Small" },
+  { value: 0, label: "Medium" },
+  { value: 3, label: "Large" }
 ];
 const options2 = [
   { value: "Mild", label: "Mild" },
@@ -19,25 +19,44 @@ const options3 = [
   { value: "Special", label: "Special" }
 ];
 export default class Modal extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
-      selectedOption: null,
+      selectedOption: "Medium",
       selectedOption2: null,
       selectedOption3: null,
-      totalState: null
+      totalState: 0,
+      priceChange: 0
     };
     this.handleChange = this.handleChange.bind(this);
+    this.logValues = this.logValues.bind(this);
   }
   handleChange = (price, event) => {
-    var value = event.value;
-    var totals = price;
-    if (value === "Small") totals -= 2;
-    else if (value === "Large") totals += 2;
-    this.totalState = totals;
-    this.setState({ selectedOption: value, totalState: totals });
-    console.log(this.totalState);
+    let value = event.value;
+    let label = event.label;
+    let totals = price;
+    if (value === -3) totals -= 3;
+    else if (value === 3) totals += 3;
+    this.setState(
+      {
+        selectedOption: label,
+        totalState: totals,
+        priceChange: value
+      } /*,
+      () => {
+        this.props.onChange(this.state.totalState);
+      } */
+    );
+  };
+  /*
+  componentDidMount() {
+    this.setState({ totalState: this.state.price + this.state.priceChange });
+  } */
+
+  logValues = () => {
+    console.log(this.state.selectedOption);
+    console.log(this.state.totalState);
   };
   handleChange2 = event => {
     this.setState({ selectedOption2: event.value });
@@ -96,12 +115,13 @@ export default class Modal extends Component {
                       placeholder="Sauce"
                     />
                   </div>
-                  <h5 class="text-muted">Price: ${this.totalState}</h5>
+                  <h5 class="text-muted">Price: ${price}</h5>
 
                   <div class="horizontal-container">
                     <button
                       class="ButtonContainer"
                       onClick={() => {
+                        this.logValues();
                         closeModal();
                       }}
                     >
