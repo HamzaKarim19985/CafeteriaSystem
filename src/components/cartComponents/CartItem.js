@@ -2,31 +2,41 @@ import React, { Component } from "react";
 
 export default class CartItem extends Component {
   render() {
+    const {
+      id,
+      title,
+      img,
+      price,
+      size,
+      flavour,
+      sauce,
+      count,
+      total
+    } = this.props.item;
+    const { decrement, increment, removeItem } = this.props.value;
     return (
       <div class="row my-1 text-center">
         <div class="col-10 mx-auto col-lg-2">
           <img
-            src={"http://code.slicecrowd.com/labs/4/images/t-shirt.png"}
+            src={img}
             class="img-fluid "
-            style={{ width: "5rem", height: "5rem" }}
+            style={{ width: "5rem", height: "2.6rem" }}
           />
         </div>
 
         <div class="col-10 mx-auto col-lg-2">
           <span class="d-lg-none">Product:</span>
-          T-Shirt
+          {title}
         </div>
 
         <div class="col-10 mx-auto col-lg-2">
-          <span class="d-lg-none">Price:</span>
-          15$
+          <span class="d-lg-none">Price:</span>${price}
         </div>
 
         <div class="col-10 mx-auto col-lg-2">
-          <span class="btn btn-black mx-1">-</span>
-          <span class="btn btn-black mx-1">1</span>
-
-          <span class="btn btn-black mx-1">+</span>
+          <span class=" mx-1">{size} |</span>
+          <span class=" mx-1">{flavour} |</span>
+          <span class=" mx-1">{sauce}</span>
         </div>
 
         <div class="col-10 mx-auto col-lg-2">
@@ -36,8 +46,7 @@ export default class CartItem extends Component {
         </div>
 
         <div class="col-10 mx-auto col-lg-2">
-          <span class="d-lg-none">Total:</span>
-          15$
+          <span class="d-lg-none">Total:</span>${total}
         </div>
       </div>
     );

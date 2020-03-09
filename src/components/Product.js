@@ -38,7 +38,7 @@ export default class Product extends Component {
                               value.openModal(id);
                             }}
                           >
-                            <span class="txt">Add in cart</span>
+                            Details
                           </button>
                         </span>
                       </btn>

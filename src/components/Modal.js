@@ -1,83 +1,127 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { ProductConsumer, ProductContext } from "../context.js";
+import Select from "react-select";
 
+const options = [
+  { value: "Small", label: "Small" },
+  { value: "Medium", label: "Medium" },
+  { value: "Large", label: "Large" }
+];
+const options2 = [
+  { value: "Mild", label: "Mild" },
+  { value: "Flavoured", label: "Flavour" },
+  { value: "Extra", label: "Extra" }
+];
+const options3 = [
+  { value: "Hot", label: "Hot" },
+  { value: "Sweet", label: "Sweet" },
+  { value: "Special", label: "Special" }
+];
 export default class Modal extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedOption: null,
+      selectedOption2: null,
+      selectedOption3: null,
+      totalState: null
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange = (price, event) => {
+    var value = event.value;
+    var totals = price;
+    if (value === "Small") totals -= 2;
+    else if (value === "Large") totals += 2;
+    this.totalState = totals;
+    this.setState({ selectedOption: value, totalState: totals });
+    console.log(this.totalState);
+  };
+  handleChange2 = event => {
+    this.setState({ selectedOption2: event.value });
+  };
+  handleChange3 = event => {
+    this.setState({ selectedOption3: event.value });
+  };
   render() {
+    const {
+      selectedOption,
+      selectedOption2,
+      selectedOption3,
+      totalState
+    } = this.state;
     return (
       <ProductConsumer>
         {value => {
           const { modalOpen, closeModal } = value;
-          const { img, title, price } = value.modalProduct;
+          const {
+            id,
+            img,
+            title,
+            price,
+            sauce,
+            flavour,
+            size,
+            total
+          } = value.modalProduct;
 
           if (!modalOpen) return null;
           else {
             return (
               <div class="container">
                 <div class="ModalContainer">
-                  <img
-                    src={
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTg_PCvrlzkX_EzHag6Tkit3ZJs3J24N3wGqu2vHueOsnnabIz3"
-                    }
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <h2>{"Burger"}</h2>
+                  <img src={img} class="img-fluid" alt="" />
+                  <h2>{title}</h2>
                   <div class="horizontal-container">
-                    <div class="selectdiv">
-                      <label>
-                        <select>
-                          <option selected> Size </option>
-                          <option>Small</option>
-                          <option>Medium</option>
-                          <option>Large</option>
-                        </select>
-                      </label>
-                    </div>
+                    <Select
+                      options={options}
+                      onChange={this.handleChange.bind(this, price)}
+                      className="select"
+                      placeholder="Size"
+                    />
 
-                    <div class="selectdiv">
-                      <label>
-                        <select>
-                          <option selected> Flavour </option>
-                          <option>Mild</option>
-                          <option>Flavoured</option>
-                          <option>Extra</option>
-                        </select>
-                      </label>
-                    </div>
-                    <div class="selectdiv">
-                      <label>
-                        <select>
-                          <option selected>Sauce</option>
-                          <option>Speacial </option>
-                          <option>Hot </option>
-                          <option>Sweet </option>
-                        </select>
-                      </label>
-                    </div>
+                    <Select
+                      options={options2}
+                      onChange={this.handleChange2}
+                      className="select"
+                      placeholder="Flavour"
+                    />
+
+                    <Select
+                      options={options3}
+                      onChange={this.handleChange3}
+                      className="select"
+                      placeholder="Sauce"
+                    />
                   </div>
-                  <h5 class="text-muted">Price: ${16}</h5>
+                  <h5 class="text-muted">Price: ${this.totalState}</h5>
 
                   <div class="horizontal-container">
-                    <Link to="/">
-                      <button
-                        class="ButtonContainer"
-                        /* onClick={() => {
-                    closeModal();
-                  }} */
-                      >
-                        Continue shopping
-                      </button>
-                    </Link>
+                    <button
+                      class="ButtonContainer"
+                      onClick={() => {
+                        closeModal();
+                      }}
+                    >
+                      Continue shopping
+                    </button>
 
                     <Link to="/Cart">
                       <button
                         class="ButtonContainer"
-                        /* onClick={() => {
-                    closeModal();
-                  }} */
+                        onClick={() => {
+                          value.addToCart(
+                            id,
+                            selectedOption,
+                            selectedOption2,
+                            selectedOption3,
+                            totalState
+                          );
+                        }}
                       >
-                        To Cart
+                        Add To Cart
                       </button>
                     </Link>
                   </div>
