@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import fire from "../config/Fire";
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -57,12 +58,33 @@ export default class LandingPage extends Component {
 class LoginBox extends React.Component {
   constructor(props) {
     super(props);
+    this.login = this.login.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       errors: [],
       userName: "",
+      email: "",
       password: ""
     };
+    this.submitLogin = this.submitLogin.bind(this);
+    this.login = this.login.bind(this);
   }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  login(e) {
+    e.preventDefault();
+    fire
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(u => {})
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   clearValidationErr(elm) {
     this.setState(prevState => {
       let newArr = [];
@@ -82,23 +104,39 @@ class LoginBox extends React.Component {
   }
 
   submitLogin(e) {
+    let companyID = this.state.userName;
     if (this.state.userName == "") {
-      this.showValidationErr("username", "User Name cannot be empty");
+      this.showValidationErr("username", "Company-ID cannot be empty");
+    }
+    if (this.state.email == "") {
+      this.showValidationErr("email", "Email cannot be empty");
     }
     if (this.state.password == "") {
       this.showValidationErr("password", "Password cannot be empty");
+    }
+    if (
+      companyID == "AppleInc" ||
+      companyID == "FordInc" ||
+      companyID == "MicrosoftInc"
+    ) {
+      this.login(e);
+    } else {
+      this.showValidationErr("username", "Company is not registered");
     }
   }
 
   render() {
     let userErr = null,
-      passwordErr = null;
+      passwordErr = null,
+      emailErr = null;
 
     for (let e of this.state.errors) {
       if (e.elm == "username") {
         userErr = e.msg;
       } else if (e.elm == "password") {
         passwordErr = e.msg;
+      } else if (e.elm == "email") {
+        emailErr = e.msg;
       }
     }
     return (
@@ -107,19 +145,36 @@ class LoginBox extends React.Component {
         <div className="box">
           <div className="input-group">
             <label class="form-label" htmlFor="username">
-              Username
+              CompanyID
             </label>
             <input
               type="text"
               name="username"
               className="login-input"
-              placeholder="Username"
+              value={this.state.userName}
+              placeholder="Company-ID"
               onChange={e => {
                 this.setState({ userName: e.target.value });
                 this.clearValidationErr("username");
               }}
             />
             {userErr && <small class="danger-error">{userErr}</small>}
+          </div>
+          <div className="input-group">
+            <label class="form-label" htmlFor="email">
+              Email
+            </label>
+            <input
+              type="text"
+              name="email"
+              className="login-input"
+              placeholder="Email"
+              onChange={e => {
+                this.setState({ email: e.target.value });
+                this.clearValidationErr("email");
+              }}
+            />
+            <small className="danger-error">{emailErr ? emailErr : ""}</small>
           </div>
 
           <div className="input-group">
@@ -132,7 +187,7 @@ class LoginBox extends React.Component {
               className="login-input"
               placeholder="Password"
               onChange={e => {
-                this.setState({ userName: e.target.value });
+                this.setState({ [e.target.name]: e.target.value });
                 this.clearValidationErr("password");
               }}
             />
@@ -142,7 +197,7 @@ class LoginBox extends React.Component {
           <button
             type="button"
             className="login-btn"
-            onClick={this.submitLogin.bind(this)}
+            onClick={this.submitLogin}
           >
             Login
           </button>
@@ -163,8 +218,22 @@ class RegisterBox extends React.Component {
       pswdState: null
     };
     this.onPasswordChange = this.onPasswordChange.bind(this);
+    this.signup = this.signup.bind(this);
+    this.submitRegister = this.submitRegister.bind(this);
   }
-
+  signup(e) {
+    e.preventDefault();
+    fire
+      .auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(u => {})
+      .then(u => {
+        console.log(u);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
   onPasswordChange(e) {
     this.setState({ password: e.target.value });
     this.clearValidationErr("password");
@@ -177,14 +246,26 @@ class RegisterBox extends React.Component {
   }
 
   submitRegister(e) {
-    if (this.state.userName == "") {
-      this.showValidationErr("username", "User Name cannot be empty");
+    var companyID = this.state.userName;
+
+    if (companyID == "AppleInc") console.log("companyID is registered");
+    if (companyID == "") {
+      this.showValidationErr("username", "Company-ID cannot be empty");
     }
     if (this.state.password == "") {
       this.showValidationErr("password", "Password cannot be empty");
     }
     if (this.state.email == "") {
       this.showValidationErr("email", "Email cannot be empty");
+    }
+    if (
+      companyID == "AppleInc" ||
+      companyID == "FordInc" ||
+      companyID == "MicrosoftInc"
+    ) {
+      this.signup(e);
+    } else {
+      this.showValidationErr("username", "Company is not registered");
     }
   }
 
@@ -237,13 +318,13 @@ class RegisterBox extends React.Component {
         <div className="box">
           <div className="input-group">
             <label class="form-label" htmlFor="username">
-              Username
+              Company-ID
             </label>
             <input
               type="text"
               name="username"
               className="login-input"
-              placeholder="Username"
+              placeholder="Company-ID"
               onChange={e => {
                 this.setState({ userName: e.target.value });
                 this.clearValidationErr("username");
@@ -308,7 +389,7 @@ class RegisterBox extends React.Component {
           <button
             type="button"
             className="login-btn"
-            onClick={this.submitRegister.bind(this)}
+            onClick={this.submitRegister}
           >
             Register
           </button>

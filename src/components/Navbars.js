@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
+import fire from "../config/Fire";
 
 export default class Navbars extends Component {
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
+  }
+
+  logout() {
+    fire.auth().signOut();
+  }
   render() {
     return (
       <nav>
@@ -11,6 +20,11 @@ export default class Navbars extends Component {
             <i class="large material-icons">local_dining</i>Cafe Noveau
           </Link>
 
+          <Link to="/">
+            <div>
+              <button onClick={this.logout}>L</button>
+            </div>
+          </Link>
           <div class="dropdown show right">
             <a
               class="btn dropdown-toggle"

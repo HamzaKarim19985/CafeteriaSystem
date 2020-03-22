@@ -15,7 +15,8 @@ class ProductProvider extends Component {
     cartTax: 0,
     cartTotal: 0,
     payrollDeduction: 0,
-    totalPayments: 0
+    totalPayments: 0,
+    user: {}
   };
 
   componentDidMount() {
