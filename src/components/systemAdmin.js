@@ -1,6 +1,7 @@
 import firebase from "../config/Fire";
 import React, { Component, useState, useEffect } from "react";
 import { FirestoreProvider, FirestoreCollection } from "react-firestore";
+import { ProductConsumer } from "../context";
 import { render } from "@testing-library/react";
 
 /*

@@ -9,7 +9,7 @@ import Profile from "./components/Profile";
 import Cart from "./components/cartComponents/Cart";
 import Modal from "./components/Modal";
 import SystemAdmin from "./components/systemAdmin";
-import fire from "./config/Fire";
+import firebase from "./config/Fire";
 
 class App extends Component {
   constructor() {
@@ -25,11 +25,11 @@ class App extends Component {
   }
 
   authListener() {
-    fire.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
       //console.log(user);
       if (user) {
         this.setState({ user });
-        localStorage.setItem("user", user.uid);
+        localStorage.setItem("user", user.email);
       } else {
         this.setState({ user: null });
         localStorage.removeItem("user");
@@ -75,7 +75,7 @@ class App extends Component {
         <React.Fragment>
           <Navbars />
           <Switch>
-            <Route exact path="/" component={SystemAdmin}></Route>
+            <Route exact path="/" component={LandingPage}></Route>
           </Switch>
           <Modal />
         </React.Fragment>
@@ -90,6 +90,7 @@ class App extends Component {
             <Route path="/Cart" component={Cart}></Route>
             <Route path="/Modal" component={Modal}></Route>
             <Route path="/Profile" component={Profile}></Route>
+            <Route exact path="/SystemAdmin" component={SystemAdmin}></Route>
           </Switch>
           <Modal />
         </React.Fragment>

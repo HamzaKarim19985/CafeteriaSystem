@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import fire from "../config/Fire";
+import firebase from "../config/Fire";
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -64,7 +64,8 @@ class LoginBox extends React.Component {
       errors: [],
       userName: "",
       email: "",
-      password: ""
+      password: "",
+      userLoggedIn: false
     };
     this.submitLogin = this.submitLogin.bind(this);
     this.login = this.login.bind(this);
@@ -76,12 +77,15 @@ class LoginBox extends React.Component {
 
   login(e) {
     e.preventDefault();
-    fire
+    this.setState({ userLoggedIn: true });
+    firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(u => {})
       .catch(error => {
         console.log(error);
+        this.setState({ userLoggedIn: false });
+        this.showValidationErr("password", "Incorrect Login information");
       });
   }
 
@@ -129,6 +133,10 @@ class LoginBox extends React.Component {
     let userErr = null,
       passwordErr = null,
       emailErr = null;
+
+    console.log(this.state.userLoggedIn);
+    let userID = localStorage.getItem("user");
+    console.log(userID);
 
     for (let e of this.state.errors) {
       if (e.elm == "username") {
@@ -223,7 +231,7 @@ class RegisterBox extends React.Component {
   }
   signup(e) {
     e.preventDefault();
-    fire
+    firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(u => {})
@@ -248,7 +256,6 @@ class RegisterBox extends React.Component {
   submitRegister(e) {
     var companyID = this.state.userName;
 
-    if (companyID == "AppleInc") console.log("companyID is registered");
     if (companyID == "") {
       this.showValidationErr("username", "Company-ID cannot be empty");
     }

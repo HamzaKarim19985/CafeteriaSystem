@@ -16,7 +16,7 @@ class ProductProvider extends Component {
     cartTotal: 0,
     payrollDeduction: 0,
     totalPayments: 0,
-    user: {}
+    userID: null
   };
 
   componentDidMount() {
@@ -180,6 +180,11 @@ class ProductProvider extends Component {
     const product = this.getItem(id);
     this.setState(() => {
       return { detailProduct: product };
+    });
+  };
+  handleDetail = userID => {
+    this.setState(() => {
+      return { userID: userID };
     });
   };
   addToCart = (id, size, flavour, sauce, total) => {
