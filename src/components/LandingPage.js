@@ -81,11 +81,15 @@ class LoginBox extends React.Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(u => {})
+      .then(u => {
+        localStorage.setItem("user", this.state.email);
+        console.log(localStorage.getItem("user"));
+      })
       .catch(error => {
         console.log(error);
         this.setState({ userLoggedIn: false });
         this.showValidationErr("password", "Incorrect Login information");
+        localStorage.removeItem("user");
       });
   }
 
@@ -109,6 +113,12 @@ class LoginBox extends React.Component {
 
   submitLogin(e) {
     let companyID = this.state.userName;
+    if (
+      this.state.userName == "systemAdmin" &&
+      this.state.password == "systemAdmin"
+    ) {
+      console.log("system Admin");
+    }
     if (this.state.userName == "") {
       this.showValidationErr("username", "Company-ID cannot be empty");
     }
@@ -124,6 +134,7 @@ class LoginBox extends React.Component {
       companyID == "MicrosoftInc"
     ) {
       this.login(e);
+      console.log("Entering login function");
     } else {
       this.showValidationErr("username", "Company is not registered");
     }

@@ -64,7 +64,10 @@ export default class SystemAdmin extends Component {
                         <td scope="col">March31st</td>
                         <td scope="col">{story.price}</td>
                         <td scope="col">Placed</td>
-                        <td scope="col">{story.size}</td>
+                        <td scope="col">
+                          {story.size}-{story.sauce}-{story.flavour}
+                        </td>
+
                         <td>
                           <button class=" btn-success mr-2">Picked Up</button>
                           <button class="btn-danger">Sold at Half</button>
