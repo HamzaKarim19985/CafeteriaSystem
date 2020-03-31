@@ -77,12 +77,20 @@ class LoginBox extends React.Component {
 
   login(e) {
     e.preventDefault();
-    this.setState({ userLoggedIn: true });
+    if (
+      this.state.email == "systemAdmin" &&
+      this.state.password == "systemAdmin"
+    ) {
+      localStorage.setItem("systemAdmin", true);
+      console.log(localStorage.getItem("systemAdmin"));
+      return;
+    }
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(u => {
         localStorage.setItem("user", this.state.email);
+        localStorage.setItem("systemAdmin", false);
         console.log(localStorage.getItem("user"));
       })
       .catch(error => {
@@ -113,12 +121,7 @@ class LoginBox extends React.Component {
 
   submitLogin(e) {
     let companyID = this.state.userName;
-    if (
-      this.state.userName == "systemAdmin" &&
-      this.state.password == "systemAdmin"
-    ) {
-      console.log("system Admin");
-    }
+
     if (this.state.userName == "") {
       this.showValidationErr("username", "Company-ID cannot be empty");
     }
@@ -144,10 +147,6 @@ class LoginBox extends React.Component {
     let userErr = null,
       passwordErr = null,
       emailErr = null;
-
-    console.log(this.state.userLoggedIn);
-    let userID = localStorage.getItem("user");
-    console.log(userID);
 
     for (let e of this.state.errors) {
       if (e.elm == "username") {

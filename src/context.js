@@ -5,6 +5,7 @@ const ProductContext = React.createContext();
 
 class ProductProvider extends Component {
   state = {
+    menuOption: null,
     products: [],
     cart: [],
     detailProduct: detailProduct,
@@ -22,6 +23,12 @@ class ProductProvider extends Component {
   componentDidMount() {
     this.setProducts();
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.menuOption !== this.state.menuOption) {
+      this.setProducts();
+    }
+  }
+
   addTotals = () => {
     let subTotal = 0;
 
@@ -40,6 +47,7 @@ class ProductProvider extends Component {
       };
     });
   };
+
   addPayroll = () => {
     let payment = this.state.cartTotal;
     this.setState(
@@ -127,6 +135,27 @@ class ProductProvider extends Component {
     this.removeItem(id);
     this.openModal(id);
   };
+  menuAll = () => {
+    this.setState(() => {
+      return {
+        menuOption: 1
+      };
+    });
+  };
+  menuVeggie = () => {
+    this.setState(() => {
+      return {
+        menuOption: 2
+      };
+    });
+  };
+  menuMeat = () => {
+    this.setState(() => {
+      return {
+        menuOption: 3
+      };
+    });
+  };
   openModal = id => {
     const product = this.getItem(id);
     this.setState(() => {
@@ -160,11 +189,26 @@ class ProductProvider extends Component {
   setProducts = () => {
     let tempProduct = [];
 
-    storeProducts.forEach(item => {
-      const singleItem = { ...item };
-      tempProduct = [...tempProduct, singleItem];
-    });
-
+    if (this.state.menuOption == 2) {
+      storeProducts.forEach(item => {
+        if (item.veggie == true) {
+          const singleItem = { ...item };
+          tempProduct = [...tempProduct, singleItem];
+        }
+      });
+    } else if (this.state.menuOption == 3) {
+      storeProducts.forEach(item => {
+        if (item.veggie == false) {
+          const singleItem = { ...item };
+          tempProduct = [...tempProduct, singleItem];
+        }
+      });
+    } else {
+      storeProducts.forEach(item => {
+        const singleItem = { ...item };
+        tempProduct = [...tempProduct, singleItem];
+      });
+    }
     this.setState(() => {
       {
         return { products: tempProduct };
@@ -226,7 +270,10 @@ class ProductProvider extends Component {
           clearCart: this.clearCart,
           changeItem: this.changeItem,
           addPayroll: this.addPayroll,
-          addPayment: this.addPayment
+          addPayment: this.addPayment,
+          menuAll: this.menuAll,
+          menuMeat: this.menuMeat,
+          menuVeggie: this.menuVeggie
         }}
       >
         {this.props.children}

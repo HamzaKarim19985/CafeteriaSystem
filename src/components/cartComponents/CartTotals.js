@@ -28,7 +28,8 @@ export default class CartTotals extends Component {
         userID: userEmail,
         size: e.size,
         sauce: e.sauce,
-        flavour: e.flavour
+        flavour: e.flavour,
+        status: "Placed"
       });
     });
   };

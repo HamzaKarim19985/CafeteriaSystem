@@ -1,8 +1,8 @@
 import firebase from "../config/Fire";
 import React, { Component, useState, useEffect } from "react";
 import { FirestoreProvider, FirestoreCollection } from "react-firestore";
-import { ProductConsumer } from "../context";
 import { render } from "@testing-library/react";
+import { ProductConsumer, ProductContext } from "../context.js";
 
 /*
 const db = fire.firestore();
@@ -18,6 +18,10 @@ export default class SystemAdmin extends Component {
     this.state = {
       objArr: []
     };
+    this.deleteOrder = this.deleteOrder.bind(this);
+    this.pickedUpStatus = this.pickedUpStatus.bind(this);
+    this.soldStatus = this.soldStatus.bind(this);
+    this.prepareStatus = this.prepareStatus.bind(this);
   }
 
   async getMarker() {
@@ -31,9 +35,78 @@ export default class SystemAdmin extends Component {
       });
   }
 
+  pickedUpStatus = id => {
+    const db = firebase.firestore();
+    db.collection("orders")
+      .doc(id)
+      .update({
+        status: "Picked Up"
+      });
+  };
+  soldStatus = id => {
+    const db = firebase.firestore();
+    db.collection("orders")
+      .doc(id)
+      .update({
+        status: "Sold at Half"
+      });
+  };
+  prepareStatus = id => {
+    const db = firebase.firestore();
+    db.collection("orders")
+      .doc(id)
+      .update({
+        status: "Being Made"
+      });
+  };
+  deleteOrder = id => {
+    const db = firebase.firestore();
+    db.collection("orders")
+      .doc(id)
+      .delete();
+  };
+
   render() {
     return (
       <div>
+        <ProductConsumer>
+          {value => {
+            return (
+              <div>
+                <button
+                  class=" btn-success mr-2"
+                  onClick={() => {
+                    value.menuVeggie();
+                    localStorage.setItem("menuOpt", "Veggietarian");
+                    console.log(localStorage.getItem("menuOpt"));
+                  }}
+                >
+                  Suggest Veggietarian Menu
+                </button>
+                <button
+                  class=" btn-success mr-2"
+                  onClick={() => {
+                    value.menuMeat();
+                    localStorage.setItem("menuOpt", "Meat");
+                    console.log(localStorage.getItem("menuOpt"));
+                  }}
+                >
+                  Suggest Meat Menu
+                </button>
+                <button
+                  class=" btn-success mr-2"
+                  onClick={() => {
+                    value.menuAll();
+                    localStorage.setItem("menuOpt", "Buffet");
+                    console.log(localStorage.getItem("menuOpt"));
+                  }}
+                >
+                  Suggest Buffet Menu
+                </button>
+              </div>
+            );
+          }}
+        </ProductConsumer>
         <table class="table">
           <thead class="thead-dark">
             <tr>
@@ -61,16 +134,37 @@ export default class SystemAdmin extends Component {
                         <td scope="col">{story.userID}</td>
                         <td scope="col">{story.name}</td>
                         <td scope="col">{story.barcode}</td>
-                        <td scope="col">March31st</td>
-                        <td scope="col">{story.price}</td>
-                        <td scope="col">Placed</td>
+                        <td scope="col">{story.date}</td>
+                        <td scope="col">${story.price}</td>
+                        <td scope="col">{story.status}</td>
                         <td scope="col">
                           {story.size}-{story.sauce}-{story.flavour}
                         </td>
-
-                        <td>
-                          <button class=" btn-success mr-2">Picked Up</button>
-                          <button class="btn-danger">Sold at Half</button>
+                        <td scope="col-5">
+                          <button
+                            class=" btn-success mr-2"
+                            onClick={this.pickedUpStatus.bind(this, story.id)}
+                          >
+                            Picked Up
+                          </button>
+                          <button
+                            class="btn-warning mr-2"
+                            onClick={this.soldStatus.bind(this, story.id)}
+                          >
+                            Sold at 1/2
+                          </button>
+                          <button
+                            class="btn-primary"
+                            onClick={this.prepareStatus.bind(this, story.id)}
+                          >
+                            Prepare
+                          </button>
+                          <button
+                            class="btn-danger mt-1"
+                            onClick={this.deleteOrder.bind(this, story.id)}
+                          >
+                            X
+                          </button>
                         </td>
                       </tr>
                     ))}

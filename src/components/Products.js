@@ -7,7 +7,12 @@ export default class Products extends Component {
     return (
       <div class="container">
         <div>
-          <div class="title">Browse Our Menu</div>
+          <div class="title">
+            Browse Our {localStorage.getItem("menuOpt")} Menu
+          </div>
+          <h5>
+            Valid Until Date:{new Date().toLocaleString().substring(0, 10)}
+          </h5>
         </div>
         <div>
           <form action="" class="search-form mt-4">

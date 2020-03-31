@@ -26,11 +26,14 @@ class App extends Component {
 
   authListener() {
     firebase.auth().onAuthStateChanged(user => {
-      //console.log(user);
+      console.log(user);
+
       if (user) {
         this.setState({ user });
+        console.log(user.email);
       } else {
         this.setState({ user: null });
+        console.log("No user Sighned in");
       }
     });
   }
@@ -67,7 +70,7 @@ class App extends Component {
       });
     };
     fetchData(); */
-
+    const systemAdmin = localStorage.getItem("systemAdmin");
     if (this.state.user == null) {
       return (
         <React.Fragment>
@@ -78,17 +81,28 @@ class App extends Component {
           <Modal />
         </React.Fragment>
       );
+    } else if (this.state.user.email == "systemadmin@gmail.com") {
+      return (
+        <React.Fragment>
+          <Navbars />
+          <Switch>
+            <Route exact path="/SystemAdmin" component={SystemAdmin}></Route>
+            <Route path="/Products" component={Products}></Route>
+          </Switch>
+          <Modal />
+        </React.Fragment>
+      );
     } else {
       return (
         <React.Fragment>
           <Navbars />
           <Switch>
-            <Route exact path="/" component={LandingPage}></Route>
+            <Route exact path="/" component={Products}></Route>
             <Route path="/Products" component={Products}></Route>
             <Route path="/Cart" component={Cart}></Route>
             <Route path="/Modal" component={Modal}></Route>
             <Route path="/Profile" component={Profile}></Route>
-            <Route exact path="/SystemAdmin" component={SystemAdmin}></Route>
+            <Route path="/SystemAdmin" component={SystemAdmin}></Route>
           </Switch>
           <Modal />
         </React.Fragment>
