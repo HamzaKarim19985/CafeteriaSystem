@@ -78,20 +78,25 @@ class LoginBox extends React.Component {
   login(e) {
     e.preventDefault();
     if (
-      this.state.email == "systemAdmin" &&
+      this.state.email == "systemadmin@gmail.com" &&
       this.state.password == "systemAdmin"
     ) {
       localStorage.setItem("systemAdmin", true);
       console.log(localStorage.getItem("systemAdmin"));
-      return;
     }
+
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(u => {
+        localStorage.setItem("company", this.state.userName);
         localStorage.setItem("user", this.state.email);
-        localStorage.setItem("systemAdmin", false);
+        localStorage.setItem("password", this.state.password);
+        if (this.state.email !== "systemadmin@gmail.com") {
+          localStorage.setItem("systemAdmin", false);
+        }
         console.log(localStorage.getItem("user"));
+        console.log(localStorage.getItem("systemAdmin"));
       })
       .catch(error => {
         console.log(error);

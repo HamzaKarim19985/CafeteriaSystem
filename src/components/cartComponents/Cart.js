@@ -47,7 +47,7 @@ export default class Cart extends Component {
                     </div>
                     <div className="col-10 mx-auto col-lg-2">
                       <p className="text-uppercase">
-                        <strong>change</strong>
+                        <strong>change|Delete</strong>
                       </p>
                     </div>
                     <div className="col-10 mx-auto col-lg-2">

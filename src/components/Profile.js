@@ -3,6 +3,9 @@ import { ProductConsumer } from "../context";
 
 export default class Profile extends Component {
   render() {
+    const company = localStorage.getItem("company");
+    const email = localStorage.getItem("user");
+    const password = localStorage.getItem("password");
     return (
       <div class="emp-profile">
         <ProductConsumer>
@@ -23,7 +26,7 @@ export default class Profile extends Component {
                   <div class="col-md-6">
                     <div class="profile-head">
                       <h5>Full Name</h5>
-                      <h6>Company employee</h6>
+                      <h6>{email}</h6>
                       <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                           <a
@@ -67,10 +70,10 @@ export default class Profile extends Component {
                       >
                         <div class="row">
                           <div class="col-md-6">
-                            <label>Employee Id</label>
+                            <label>Company Id</label>
                           </div>
                           <div class="col-md-6">
-                            <p>Employee543</p>
+                            <p>{company}</p>
                           </div>
                         </div>
                         <div class="row">
@@ -78,7 +81,7 @@ export default class Profile extends Component {
                             <label>User Name</label>
                           </div>
                           <div class="col-md-6">
-                            <p>Employees-user-login-Name</p>
+                            <p>{email}</p>
                           </div>
                         </div>
                         <div class="row">
@@ -86,7 +89,7 @@ export default class Profile extends Component {
                             <label>Email</label>
                           </div>
                           <div class="col-md-6">
-                            <p>kshitighelani@gmail.com</p>
+                            <p>{email}</p>
                           </div>
                         </div>
                         <div class="row">
@@ -102,7 +105,7 @@ export default class Profile extends Component {
                             <label>Password</label>
                           </div>
                           <div class="col-md-6">
-                            <p>Employee-Password</p>
+                            <p>{password}</p>
                           </div>
                         </div>
                       </div>
@@ -144,7 +147,7 @@ export default class Profile extends Component {
                             <label>Final Monthly Payroll</label>
                           </div>
                           <div class="col-md-6">
-                            <p>${monthlyPayroll - totalPayments}</p>
+                            <p>${monthlyPayroll - payrollDeduction}</p>
                           </div>
                         </div>
                         <div class="row">

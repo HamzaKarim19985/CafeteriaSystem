@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import fire from "../config/Fire";
+import firebase from "../config/Fire";
 
 export default class Navbars extends Component {
   constructor(props) {
@@ -10,7 +10,8 @@ export default class Navbars extends Component {
   }
 
   logout() {
-    fire.auth().signOut();
+    firebase.auth().signOut();
+    console.log("SighnedOut");
   }
   render() {
     return (
@@ -20,11 +21,6 @@ export default class Navbars extends Component {
             <i class="large material-icons">local_dining</i>Cafe Noveau
           </Link>
 
-          <Link to="/">
-            <div>
-              <button onClick={this.logout}>L</button>
-            </div>
-          </Link>
           <div class="dropdown show right">
             <a
               class="btn dropdown-toggle"
@@ -39,8 +35,8 @@ export default class Navbars extends Component {
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <Link class="dropdown-item" to="/">
-                Login
+              <Link class="dropdown-item" to="/" onClick={this.logout}>
+                Logout
               </Link>
               <Link class="dropdown-item" to="/Products">
                 Menu
@@ -52,7 +48,7 @@ export default class Navbars extends Component {
                 Profile
               </Link>
               <Link class="dropdown-item" to="/SystemAdmin">
-                Modal
+                System Admin
               </Link>
             </div>
           </div>

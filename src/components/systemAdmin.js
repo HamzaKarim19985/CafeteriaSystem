@@ -68,112 +68,117 @@ export default class SystemAdmin extends Component {
 
   render() {
     return (
-      <div>
-        <ProductConsumer>
-          {value => {
-            return (
-              <div>
-                <button
-                  class=" btn-success mr-2"
-                  onClick={() => {
-                    value.menuVeggie();
-                    localStorage.setItem("menuOpt", "Veggietarian");
-                    console.log(localStorage.getItem("menuOpt"));
-                  }}
-                >
-                  Suggest Veggietarian Menu
-                </button>
-                <button
-                  class=" btn-success mr-2"
-                  onClick={() => {
-                    value.menuMeat();
-                    localStorage.setItem("menuOpt", "Meat");
-                    console.log(localStorage.getItem("menuOpt"));
-                  }}
-                >
-                  Suggest Meat Menu
-                </button>
-                <button
-                  class=" btn-success mr-2"
-                  onClick={() => {
-                    value.menuAll();
-                    localStorage.setItem("menuOpt", "Buffet");
-                    console.log(localStorage.getItem("menuOpt"));
-                  }}
-                >
-                  Suggest Buffet Menu
-                </button>
-              </div>
-            );
-          }}
-        </ProductConsumer>
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">UserID</th>
-              <th scope="col">Item</th>
-              <th scope="col">Barcode</th>
-              <th scope="col">Date</th>
-              <th scope="col">Price</th>
-              <th scope="col">Status</th>
-              <th scope="col">Customized Order</th>
-              <th scope="col-2">Action</th>
-            </tr>
-          </thead>
+      <div class="container">
+        <div class="container">
+          <h3 class="text-capitalize font-weight-bold">
+            Consult System Orders
+          </h3>
+          <ProductConsumer>
+            {value => {
+              return (
+                <div>
+                  <button
+                    class="btn-outline-dark mr-2 mb-3"
+                    onClick={() => {
+                      value.menuVeggie();
+                      localStorage.setItem("menuOpt", "Vegetarian");
+                      console.log(localStorage.getItem("menuOpt"));
+                    }}
+                  >
+                    Suggest Veggietarian Menu
+                  </button>
+                  <button
+                    class="btn-outline-dark mr-2 mb-3"
+                    onClick={() => {
+                      value.menuMeat();
+                      localStorage.setItem("menuOpt", "Meat");
+                      console.log(localStorage.getItem("menuOpt"));
+                    }}
+                  >
+                    Suggest Meat Menu
+                  </button>
+                  <button
+                    class="btn-outline-dark  mr-2 mb-3"
+                    onClick={() => {
+                      value.menuAll();
+                      localStorage.setItem("menuOpt", "Buffet");
+                      console.log(localStorage.getItem("menuOpt"));
+                    }}
+                  >
+                    Suggest Buffet Menu
+                  </button>
+                </div>
+              );
+            }}
+          </ProductConsumer>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">UserID</th>
+                <th scope="col">Item</th>
+                <th scope="col">Barcode</th>
+                <th scope="col">Date</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Customized Order</th>
+                <th scope="col-2">Action</th>
+              </tr>
+            </thead>
 
-          <FirestoreProvider firebase={firebase}>
-            <FirestoreCollection
-              path="orders"
-              render={({ isLoading, data }) => {
-                return isLoading ? (
-                  <h2>Loading</h2>
-                ) : (
-                  <tbody>
-                    {data.map(story => (
-                      <tr>
-                        <td scope="col">{story.userID}</td>
-                        <td scope="col">{story.name}</td>
-                        <td scope="col">{story.barcode}</td>
-                        <td scope="col">{story.date}</td>
-                        <td scope="col">${story.price}</td>
-                        <td scope="col">{story.status}</td>
-                        <td scope="col">
-                          {story.size}-{story.sauce}-{story.flavour}
-                        </td>
-                        <td scope="col-5">
-                          <button
-                            class=" btn-success mr-2"
-                            onClick={this.pickedUpStatus.bind(this, story.id)}
-                          >
-                            Picked Up
-                          </button>
-                          <button
-                            class="btn-warning mr-2"
-                            onClick={this.soldStatus.bind(this, story.id)}
-                          >
-                            Sold at 1/2
-                          </button>
-                          <button
-                            class="btn-primary"
-                            onClick={this.prepareStatus.bind(this, story.id)}
-                          >
-                            Prepare
-                          </button>
-                          <button
-                            class="btn-danger mt-1"
-                            onClick={this.deleteOrder.bind(this, story.id)}
-                          >
-                            X
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                );
-              }}
-            />
-          </FirestoreProvider>
-        </table>
+            <FirestoreProvider firebase={firebase}>
+              <FirestoreCollection
+                path="orders"
+                render={({ isLoading, data }) => {
+                  return isLoading ? (
+                    <h2>Loading</h2>
+                  ) : (
+                    <tbody>
+                      {data.map(story => (
+                        <tr>
+                          <td scope="col">{story.userID}</td>
+                          <td scope="col">{story.name}</td>
+                          <td scope="col">{story.barcode}</td>
+                          <td scope="col">{story.date}</td>
+                          <td scope="col">${story.price}</td>
+                          <td scope="col">{story.status}</td>
+                          <td scope="col">
+                            {story.size}-{story.sauce}-{story.flavour}
+                          </td>
+                          <td scope="col-5">
+                            <button
+                              class=" btn-success mr-2"
+                              onClick={this.pickedUpStatus.bind(this, story.id)}
+                            >
+                              Picked Up
+                            </button>
+                            <button
+                              class="btn-danger mr-2"
+                              onClick={this.soldStatus.bind(this, story.id)}
+                            >
+                              Sold at 1/2
+                            </button>
+                            <button
+                              class="btn-secondary mr-2"
+                              onClick={this.prepareStatus.bind(this, story.id)}
+                            >
+                              Prepare
+                            </button>
+                            <button
+                              class="btn-danger mt-1"
+                              onClick={this.deleteOrder.bind(this, story.id)}
+                            >
+                              X
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  );
+                }}
+              />
+            </FirestoreProvider>
+          </table>
+        </div>
       </div>
     );
   }

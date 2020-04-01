@@ -52,7 +52,7 @@ export default class CartItem extends Component {
                 changeItem(id);
               }}
             >
-              <i class="fas fa-trash" />
+              Change Order
             </button>
             <button onClick={() => removeItem(id)}>
               <i class="fas fa-trash" />

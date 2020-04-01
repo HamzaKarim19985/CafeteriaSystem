@@ -188,15 +188,16 @@ class ProductProvider extends Component {
   };
   setProducts = () => {
     let tempProduct = [];
-
-    if (this.state.menuOption == 2) {
+    const menuOpt = localStorage.getItem("menuOpt");
+    console.log(menuOpt);
+    if (menuOpt == "Vegetarian") {
       storeProducts.forEach(item => {
         if (item.veggie == true) {
           const singleItem = { ...item };
           tempProduct = [...tempProduct, singleItem];
         }
       });
-    } else if (this.state.menuOption == 3) {
+    } else if (menuOpt == "Meat") {
       storeProducts.forEach(item => {
         if (item.veggie == false) {
           const singleItem = { ...item };

@@ -6,7 +6,7 @@ export default class Products extends Component {
   render() {
     return (
       <div class="container">
-        <div>
+        <div class="container">
           <div class="title">
             Browse Our {localStorage.getItem("menuOpt")} Menu
           </div>

@@ -86,8 +86,9 @@ class App extends Component {
         <React.Fragment>
           <Navbars />
           <Switch>
-            <Route exact path="/SystemAdmin" component={SystemAdmin}></Route>
+            <Route path="/SystemAdmin" component={SystemAdmin}></Route>
             <Route path="/Products" component={Products}></Route>
+            <Route component={SystemAdmin} />
           </Switch>
           <Modal />
         </React.Fragment>
@@ -102,7 +103,6 @@ class App extends Component {
             <Route path="/Cart" component={Cart}></Route>
             <Route path="/Modal" component={Modal}></Route>
             <Route path="/Profile" component={Profile}></Route>
-            <Route path="/SystemAdmin" component={SystemAdmin}></Route>
           </Switch>
           <Modal />
         </React.Fragment>
