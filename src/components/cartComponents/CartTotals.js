@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import firebase from "../../config/Fire";
+import PayPalButton from "./PayPalButton";
 
 export default class CartTotals extends Component {
   constructor() {
@@ -44,6 +45,7 @@ export default class CartTotals extends Component {
       addPayroll,
       addPayment
     } = this.props.value;
+    const history = this.props.history;
     const userEmail = localStorage.getItem("user");
     return (
       <div class="row">
@@ -87,6 +89,11 @@ export default class CartTotals extends Component {
             <span class="text-title">Total:</span>
             <strong>{cartTotal}</strong>
           </h5>
+          <PayPalButton
+            total={cartTotal}
+            clearCart={clearCart}
+            history={history}
+          />
         </div>
       </div>
     );
